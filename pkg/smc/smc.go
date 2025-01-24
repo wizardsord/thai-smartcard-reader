@@ -111,7 +111,11 @@ func (s *smartCard) readCard(ctx *scard.Context, reader string, opts *Options) (
 		return card, nil, err
 	}
 
-	cmd := util.GetResponseCommand(status.Atr)
+	cmd, err := util.GetResponseCommand(status.Atr)
+	if err != nil {
+		log.Printf("Error determining response command: %v", err)
+		return card, nil, err
+	}
 
 	data := model.Data{}
 
