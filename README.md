@@ -16,11 +16,12 @@ Go application read personal and nhso data from thai id card, it run in the back
 
 ## How to GUI
 
-- install fyne : 'go install fyne.io/fyne/v2/cmd/fyne@latest'
-- For MacOS : 'fyne package -os darwin -icon icon.png'
-- for windows : 'go build -ldflags "-H windowsgui" -o ./bin/thai-smartcard-gui main.go'
+- install fyne : `go install fyne.io/fyne/v2/cmd/fyne@latest`
+- install fyne-cross : `go install github.com/fyne-io/fyne-cross@latest`
+- For MacOS : `fyne package -os darwin -icon icon.png`
+- for windows : `fyne-cross windows -arch=amd64 -app-id="com.jittaconnext.smartcard-reader"`
 
 ## How to change icon in systemtray
-- using command "fyne bundle icon.png > bundled.go"
+- using command `fyne bundle icon.png > bundled.go`
 
 
