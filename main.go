@@ -21,7 +21,7 @@ import (
 
 func main() {
 	// Create Fyne application
-	a := app.NewWithID("com.example.smartcard-reader")
+	a := app.NewWithID("com.jittaconnext.smartcard-reader")
 
 	// Load the custom icon
 	iconResource := resourceIconPng
