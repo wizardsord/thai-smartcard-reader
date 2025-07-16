@@ -7,10 +7,10 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/somprasongd/go-thai-smartcard/pkg/model"
-	"github.com/somprasongd/go-thai-smartcard/pkg/server"
-	"github.com/somprasongd/go-thai-smartcard/pkg/smc"
-	"github.com/somprasongd/go-thai-smartcard/pkg/util"
+	"github.com/wizardsord/thai-smartcard-reader/pkg/model"
+	"github.com/wizardsord/thai-smartcard-reader/pkg/server"
+	"github.com/wizardsord/thai-smartcard-reader/pkg/smc"
+	"github.com/wizardsord/thai-smartcard-reader/pkg/util"
 )
 
 func main() {

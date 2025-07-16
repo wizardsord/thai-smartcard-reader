@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/somprasongd/go-thai-smartcard/pkg/model"
+	"github.com/wizardsord/thai-smartcard-reader/pkg/model"
 )
 
 const (

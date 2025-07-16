@@ -7,6 +7,7 @@ Go application read personal and nhso data from thai id card, it run in the back
 - Required version [Go](https://go.dev/dl/) version 1.18+
 - Clone this repository
 - Download all depencies with `go mod download`
+- if use windows, install tdm-gcc `https://jmeubank.github.io/tdm-gcc/download/`
 
 > Linux install `sudo apt install build-essential libpcsclite-dev pcscd`
 
@@ -22,6 +23,5 @@ Go application read personal and nhso data from thai id card, it run in the back
 - for windows : `fyne-cross windows -arch=amd64 -app-id="com.jittaconnext.smartcard-reader"`
 
 ## How to change icon in systemtray
+
 - using command `fyne bundle icon.png > bundled.go`
-
-

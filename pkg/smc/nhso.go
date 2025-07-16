@@ -4,9 +4,9 @@ import (
 	"log"
 
 	"github.com/ebfe/scard"
-	"github.com/somprasongd/go-thai-smartcard/pkg/apdu"
-	"github.com/somprasongd/go-thai-smartcard/pkg/model"
-	"github.com/somprasongd/go-thai-smartcard/pkg/util"
+	"github.com/wizardsord/thai-smartcard-reader/pkg/apdu"
+	"github.com/wizardsord/thai-smartcard-reader/pkg/model"
+	"github.com/wizardsord/thai-smartcard-reader/pkg/util"
 )
 
 type nhsoReader struct {
