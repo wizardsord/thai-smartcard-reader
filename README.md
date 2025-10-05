@@ -19,6 +19,7 @@ Go application read personal and nhso data from thai id card, it run in the back
 
 - install fyne : `go install fyne.io/fyne/v2/cmd/fyne@latest`
 - install fyne-cross : `go install github.com/fyne-io/fyne-cross@latest`
+- install fyne-tool : `go install fyne.io/tools/cmd/fyne@latest`
 - For MacOS : `fyne package -os darwin -icon icon.png`
 - for windows : `fyne-cross windows -arch=amd64 -app-id="com.jittaconnext.smartcard-reader"`
 
