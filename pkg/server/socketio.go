@@ -3,6 +3,7 @@ package server
 import (
 	"log"
 	"net/http"
+	"sync"
 
 	socketio "github.com/googollee/go-socket.io"
 	"github.com/googollee/go-socket.io/engineio"
@@ -16,6 +17,10 @@ import (
 var allowOriginFunc = func(r *http.Request) bool {
 	return true
 }
+
+// store last data in memory
+var lastCardData any
+var mu sync.RWMutex
 
 type socketIO struct {
 	*socketio.Server
@@ -45,9 +50,30 @@ func NewSocketIO() *socketIO {
 	server.OnDisconnect("/", func(s socketio.Conn, reason string) {
 		log.Println("closed", reason)
 	})
+
+	// 🟡 Manual read request — resend last data
+    server.OnEvent("/", "readCard", func(s socketio.Conn) {
+        mu.RLock()
+        data := lastCardData
+        mu.RUnlock()
+
+        if data != nil {
+            log.Println("🟢 Sending last known card data to", s.ID())
+            s.Emit("smc-data", data)
+        } else {
+            log.Println("⚠️ No previous card data to send")
+            s.Emit("smc-error", "ยังไม่มีข้อมูลจากบัตร กรุณาเสียบใหม่")
+        }
+    })
+
 	return &socketIO{server}
 }
 
 func (s *socketIO) Broadcast(msg model.Message) {
-	s.BroadcastToNamespace("/", msg.Event, msg.Payload)
+    if msg.Event == "smc-data" {
+        mu.Lock()
+        lastCardData = msg.Payload // remember last good data
+        mu.Unlock()
+    }
+    s.BroadcastToNamespace("/", msg.Event, msg.Payload)
 }
