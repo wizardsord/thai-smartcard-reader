@@ -31,9 +31,8 @@ func main() {
 	logBinding := binding.NewString()
 	logBinding.Set("Smart Card Reader Logs\n")
 
-	logArea := widget.NewMultiLineEntry()
+	logArea := newReadOnlyMultiLineEntry()
 	logArea.Bind(logBinding)
-	logArea.Disable()
 
 	scrollContainer := container.NewScroll(logArea)
 
@@ -68,6 +67,38 @@ func main() {
 	}), nil, nil, scrollContainer))
 
 	w.ShowAndRun()
+}
+
+// readOnlyMultiLineEntry keeps the entry editable by bindings but blocks user edits.
+type readOnlyMultiLineEntry struct {
+	widget.Entry
+}
+
+func newReadOnlyMultiLineEntry() *readOnlyMultiLineEntry {
+	entry := &readOnlyMultiLineEntry{}
+	entry.MultiLine = true
+	entry.ExtendBaseWidget(entry)
+	return entry
+}
+
+func (e *readOnlyMultiLineEntry) TypedRune(r rune) {
+	// ignore typed runes to keep logs read-only
+}
+
+func (e *readOnlyMultiLineEntry) TypedKey(ev *fyne.KeyEvent) {
+	switch ev.Name {
+	case fyne.KeyBackspace, fyne.KeyDelete:
+		return
+	}
+	e.Entry.TypedKey(ev)
+}
+
+func (e *readOnlyMultiLineEntry) TypedShortcut(shortcut fyne.Shortcut) {
+	switch shortcut.(type) {
+	case *fyne.ShortcutCut, *fyne.ShortcutPaste:
+		return
+	}
+	e.Entry.TypedShortcut(shortcut)
 }
 
 // LogWriter appends log text safely via binding.String
