@@ -44,15 +44,15 @@ func main() {
 
 	go startSmartCardReader(&logMutex)
 
+	quit := newQuitFunc(a, w)
+
 	if desk, ok := a.(desktop.App); ok {
 		m := fyne.NewMenu("Smart Card Reader",
 			fyne.NewMenuItem("Show", func() {
 				w.Show()
 			}),
 			fyne.NewMenuItemSeparator(),
-			fyne.NewMenuItem("Exit", func() {
-				a.Quit()
-			}),
+			fyne.NewMenuItem("Exit", quit),
 		)
 		desk.SetSystemTrayMenu(m)
 		desk.SetSystemTrayIcon(iconResource)
@@ -62,9 +62,7 @@ func main() {
 		w.Hide()
 	})
 
-	w.SetContent(container.NewBorder(nil, widget.NewButton("Exit", func() {
-		a.Quit()
-	}), nil, nil, scrollContainer))
+	w.SetContent(container.NewBorder(nil, widget.NewButton("Exit", quit), nil, nil, scrollContainer))
 
 	w.ShowAndRun()
 }
@@ -99,6 +97,14 @@ func (e *readOnlyMultiLineEntry) TypedShortcut(shortcut fyne.Shortcut) {
 		return
 	}
 	e.Entry.TypedShortcut(shortcut)
+}
+
+func newQuitFunc(a fyne.App, w fyne.Window) func() {
+	return func() {
+		w.SetCloseIntercept(nil)
+		w.Close()
+		a.Quit()
+	}
 }
 
 // LogWriter appends log text safely via binding.String
