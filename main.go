@@ -101,14 +101,9 @@ func (e *readOnlyMultiLineEntry) TypedShortcut(shortcut fyne.Shortcut) {
 
 func newQuitFunc(a fyne.App, w fyne.Window) func() {
 	return func() {
-		go func() {
-			// optional delay gives UI time to hide
-			time.Sleep(100 * time.Millisecond)
-
-			w.SetCloseIntercept(nil)
-			w.Close()
-			a.Quit()
-		}()
+		w.SetCloseIntercept(nil)
+		w.Close()
+		a.Quit()
 	}
 }
 
